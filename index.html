@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Laboratorios JS Interactivos</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    hr {
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Laboratorios JavaScript Interactivos</h1>
+  <p>Haz clic en un botón para ejecutar el laboratorio correspondiente:</p>
+
+  <button onclick="lab1()">LAB 1 – Ordenador</button>
+  <button onclick="lab2()">LAB 2 – Galletas</button>
+  <button onclick="lab3()">LAB 3 – Concesionario</button>
+
+  <hr>
+  <pre id="output"></pre>
+
+  <script>
+    const output = document.getElementById("output");
+
+    function lab1() {
+      const ordenador1 = {
+        marca: "HP",
+        procesador: "i7",
+        ram: "16Gb",
+        hd: "1Tb",
+        precio: 1500,
+        extras: ["cámara HD", "microfono stereo", "disco de acceso rápido"],
+        maletin: true
+      };
+
+      let mensaje = `Mi ordenador es un ${ordenador1.marca}, con procesador ${ordenador1.procesador} y ${ordenador1.ram} de RAM.\n\n`;
+      mensaje += "Propiedades del ordenador:\n";
+
+      for (let prop in ordenador1) {
+        mensaje += `${prop}: ${ordenador1[prop]}\n`;
+      }
+
+      mensaje += `\nTercer extra: ${ordenador1.extras[2]}`;
+      output.textContent = mensaje;
+    }
+
+    function lab2() {
+      const galletas = {
+        marca: "Artiach",
+        nombre: "Chiquilín",
+        descripción: "galletas de mantequilla",
+        precio: 2.75,
+        hayExistencias: true
+      };
+
+      let mensaje = "ANTES:\n" + JSON.stringify(galletas, null, 2) + "\n\n";
+
+      // Añadir propiedad
+      galletas.oferta = confirm("¿Están en oferta las galletas?");
+
+      // Modificar descripción
+      const nuevaDesc = prompt("Nueva descripción para las galletas:", galletas.descripción);
+      if (nuevaDesc) galletas.descripción = nuevaDesc;
+
+      // Eliminar propiedad
+      if (confirm("¿Eliminar la propiedad 'hayExistencias'?")) {
+        delete galletas.hayExistencias;
+      }
+
+      mensaje += "DESPUÉS:\n" + JSON.stringify(galletas, null, 2);
+      mensaje += "\n\nValores:\n" + Object.values(galletas).join(", ");
+      mensaje += "\nPropiedades:\n" + Object.keys(galletas).join(", ");
+
+      output.textContent = mensaje;
+    }
+
+    function lab3() {
+      const coche1 = { marca: "Toyota", modelo: "Corolla", potencia: "122CV", precio: 21000 };
+      const coche2 = { marca: "Ford", modelo: "Focus", potencia: "150CV", precio: 23000 };
+      const coche3 = { marca: "Tesla", modelo: "Model 3", potencia: "258CV", precio: 42000 };
+      const concesionario = [coche1, coche2, coche3];
+
+      const propiedad = prompt("¿Qué quieres mostrar? (marca, modelo, potencia, precio):");
+
+      if (["marca", "modelo", "potencia", "precio"].includes(propiedad)) {
+        let mensaje = `Mostrando ${propiedad}s:\n`;
+        concesionario.forEach(coche => {
+          mensaje += coche[propiedad] + "\n";
+        });
+        output.textContent = mensaje;
+      } else {
+        output.textContent = "Propiedad no válida.";
+      }
+    }
+  </script>
+</body>
+</html>
